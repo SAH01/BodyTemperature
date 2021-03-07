@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/tv_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/chocolate"
+        android:text="体温统计"
+        android:textSize="40sp" />
+    <EditText
+        android:id="@+id/tv_text1"
+        android:layout_width="300dp"
+        android:layout_height="66dp"
+        android:layout_above="@+id/tv_button1"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="11dp"
+        android:layout_marginRight="11dp"
+        android:layout_marginBottom="338dp"
+        android:hint="请填写姓名"
+        android:textColor="@android:color/holo_purple" />
+
+    <EditText
+        android:id="@+id/tv_text2"
+        android:layout_width="300dp"
+        android:layout_height="66dp"
+        android:layout_above="@+id/tv_button1"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="11dp"
+        android:layout_marginRight="11dp"
+        android:layout_marginBottom="273dp"
+        android:hint="可以自动获取时间"
+        android:onClick="autoTimeAndDate"
+        android:textColor="@android:color/holo_purple" />
+
+    <EditText
+        android:id="@+id/tv_text3"
+        android:layout_width="300dp"
+        android:layout_height="66dp"
+        android:layout_above="@+id/tv_button1"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="11dp"
+        android:layout_marginRight="11dp"
+        android:layout_marginBottom="222dp"
+        android:hint="请输入体温（摄氏度）"
+        android:textColor="@android:color/holo_purple" />
+
+    <EditText
+        android:id="@+id/tv_text4"
+        android:layout_width="300dp"
+        android:layout_height="66dp"
+        android:layout_above="@+id/tv_button1"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="11dp"
+        android:layout_marginRight="11dp"
+        android:layout_marginBottom="164dp"
+        android:hint="可自动获取位置信息"
+        android:onClick="autoAddress"
+        android:textColor="@android:color/holo_purple" />
+
+    <EditText
+        android:id="@+id/tv_text5"
+        android:layout_width="300dp"
+        android:layout_height="154dp"
+        android:layout_above="@+id/tv_button1"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="11dp"
+        android:layout_marginRight="11dp"
+        android:layout_marginBottom="6dp"
+        android:hint="点击跳转填写"
+        android:onClick="onClick"
+        android:textColor="@android:color/holo_purple" />
+
+    <Button
+        android:id="@+id/tv_button1"
+        android:layout_width="120dp"
+        android:layout_height="45dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="200dp"
+        android:layout_marginRight="45dp"
+        android:layout_marginBottom="119dp"
+        android:onClick="insertDB"
+        android:text="添加数据"
+        android:textSize="15sp" />
+
+    <Button
+        android:id="@+id/tv_button2"
+        android:layout_width="120dp"
+        android:layout_height="45dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="200dp"
+        android:layout_marginRight="48dp"
+        android:layout_marginBottom="50dp"
+        android:onClick="queryData"
+        android:text="查看数据"
+        android:textSize="15sp" />
+
+    <Button
+        android:id="@+id/bt_main_logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/tv_button2"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="-1dp"
+        android:text="退出登录"
+        android:textColor="@color/colorAccent"
+        tools:ignore="MissingConstraints" />
+    <Button
+        android:id="@+id/info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="7dp"
+        android:layout_marginRight="7dp"
+        android:layout_marginBottom="116dp"
+        android:text="查看统计信息"
+        android:onClick="onClick"
+        />
+</RelativeLayout>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <TextView
+        android:id="@+id/tvHead"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="特殊情况"
+        android:layout_gravity="center"
+        android:textColor="@color/red"
+        android:background="@color/colorPrimary"
+        android:textSize="30dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/coral"
+        android:text="多选："
+        android:textSize="23dp"
+        android:layout_marginLeft="40dp"
+        />
+    <CheckBox
+        android:id="@+id/cb_0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvHead"
+        android:layout_marginTop="32dp"
+        android:layout_marginLeft="40dp"
+        android:layout_toLeftOf="@+id/tvHead"
+        android:textSize="20dp"
+        android:text="无" />
+
+    <CheckBox
+        android:id="@+id/cb_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/cb_2"
+        android:layout_alignBottom="@+id/cb_2"
+        android:layout_marginLeft="40dp"
+        android:layout_toRightOf="@+id/cb_2"
+        android:textSize="20dp"
+        android:text="2021年2月1日至今去过或者现在居住在中高风险地区" />
+    <CheckBox
+        android:id="@+id/cb_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/cb_0"
+        android:layout_alignBottom="@+id/cb_0"
+        android:layout_alignLeft="@+id/cb_0"
+        android:layout_marginLeft="40dp"
+        android:textSize="20dp"
+        android:text="本人或家人正在集中隔离" />
+    <CheckBox
+        android:id="@+id/cb_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/cb_0"
+        android:layout_alignBottom="@+id/cb_0"
+        android:layout_alignLeft="@+id/cb_0"
+        android:layout_marginLeft="40dp"
+        android:textSize="20dp"
+        android:text="本人或家人有出现发热症状" />
+    <CheckBox
+        android:id="@+id/cb_4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/cb_0"
+        android:layout_alignBottom="@+id/cb_0"
+        android:layout_alignLeft="@+id/cb_0"
+        android:layout_marginLeft="40dp"
+        android:textSize="20dp"
+        android:text="居住地改变" />
+
+    <Button
+        android:id="@+id/btn_add"
+        android:layout_width="66dp"
+        android:layout_height="38dp"
+        android:layout_below="@+id/cbSing"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="260dp"
+        android:layout_marginTop="36dp"
+        android:onClick="onClick"
+        android:text="确定"
+        android:textSize="10dp" />
+</LinearLayout>
