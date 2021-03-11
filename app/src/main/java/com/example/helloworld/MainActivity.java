@@ -195,7 +195,6 @@ public class MainActivity extends Activity implements View.OnClickListener {
             startActivityForResult(intent,RESQUEST);
         }
         if(view.getId() == R.id.info){
-
             //分别获取注册人数和填写人数  注册人数—填写人数那就是没有填表的人数
             int registers=0;            //注册
             int users=0;                //填表
