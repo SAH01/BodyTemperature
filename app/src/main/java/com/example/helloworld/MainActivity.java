@@ -1,12 +1,16 @@
 package com.example.helloworld;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -14,8 +18,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
@@ -43,10 +49,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private EditText text3;
     private EditText text4;
     private TextView text5;
-    private Button     info;
+    private Button   info;
+    //读写权限
+    private static String[] PERMISSIONS_STORAGE     = {
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    //请求状态码
+    private static int      REQUEST_PERMISSION_CODE = 1;
     String tempstr="";
-    private MyDBHelper mDBHelper;
-    private DBOpenHelperLogin mDBOpenHelperLogin;             //定义数据库操作类
+    private MyDBHelper mDBHelper;                              //这个是具体信息
+    private DBOpenHelperLogin mDBOpenHelperLogin;             //定义数据库操作类 这个是注册的
     private WenDate           wendate=new WenDate();
     private TextView mTv = null;
     public LocationClient mLocationClient = null;
@@ -85,7 +97,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //注册监听函数
         mLocationClient.start();
     }
-
     //
     //onCreate方法
     @Override
@@ -94,6 +105,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Log.v("MainActivity","MainActivity启动");
         SDKInitializer.initialize(getApplicationContext());
         setContentView(R.layout.activity_main);
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, PERMISSIONS_STORAGE, REQUEST_PERMISSION_CODE);
+            }
+        }
+        // Get the directory for the user's public pictures directory.
+        //在 Environment.DIRECTORY_DOWNLOADS 目录下创建名为fileName的文件夹 刷新查看
+        File file =
+                new File(Environment.getExternalStoragePublicDirectory(Environment.
+                        DIRECTORY_DOWNLOADS), "14days.xls");//参数2是文件名称
+        //mkdirs()可以创建多级目录
+        //mkdir()只能创建一级目录
+        if (!file.mkdir()) {
+            Log.e("LOG_TAG", "Directory not created");
+            Toast.makeText(MainActivity.this, "目录已存在...", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(MainActivity.this, "创建新目录...", Toast.LENGTH_SHORT).show();
+        }
+        if (!file.exists()) {
+            Toast.makeText(MainActivity.this, "创建新文件...", Toast.LENGTH_SHORT).show();
+            file.mkdirs();
+        }
+        String[] title = {"", "", ""};
+        String sheetName = "demoSheetName";
+        ExcelUtil.initExcel(file.getPath(), sheetName, title);
+        //开始写入
+        ArrayList<WenDate> wenDatelistforExcel=mDBHelper.getAllData();
+        ArrayList<User> userlistforExcel=mDBOpenHelperLogin.getAllData();
+        ExcelUtil.writeObjListToExcel(wenDatelistforExcel, file.getPath(),userlistforExcel);
+        System.out.println(file.getPath());
         /*
             初始化绑定数据库！！！！！
             很重要
@@ -114,42 +155,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //
         //把名字显示到界面
         showNmae();
+        //表格测试
     }
-
-    //表格测试
-    public void createExcel(String path) {
-        try {
-            // 在path路径下建立一个excel文件
-            WritableWorkbook wbook = Workbook.createWorkbook(new File(path));
-            // 创建一个工作表 第一个工作区
-            WritableSheet wsheet = wbook.createSheet("数据清单", 0);
-            // 设置excel里的字体
-            WritableFont wf = new WritableFont(WritableFont.ARIAL, 12,
-                    WritableFont.NO_BOLD, false);
-            // 给标题规定字体的格式
-            WritableCellFormat titleFormat = new WritableCellFormat(wf);
-            String[] title = { "账号", "密码"};
-            // 设置表头
-            for (int i = 0; i < title.length; i++) {
-                // 一列列的打印表头 按照我们规定的格式
-                Label excelTitle = new Label(i, 0, title[i], titleFormat);
-                // 把标头加到我们的工作区
-                wsheet.addCell(excelTitle);
+    //回调访问权限
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_PERMISSION_CODE) {
+            for (int i = 0; i < permissions.length; i++) {
+                Log.i("MainActivity", "申请的权限为：" + permissions[i] + ",申请结果：" + grantResults[i]);
             }
-            Label account = new Label(0, 1, "银弹小哥");
-            Label password = new Label(1, 1, "111111");
-            // 把值加到工作表中
-            wsheet.addCell(account);
-            wsheet.addCell(password);
-            // 写入文件
-            wbook.write();
-            wbook.close();
-            System.out.println("创建成功!");
-        } catch (Exception e) {
-            // TODO: handle exception
         }
     }
-
     //
     //接收复选框传过来的数据
     @Override
