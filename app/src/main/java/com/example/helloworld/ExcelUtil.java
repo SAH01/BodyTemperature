@@ -106,7 +106,6 @@ public class ExcelUtil {
                 WorkbookSettings setEncode = new WorkbookSettings();
                 setEncode.setEncoding(UTF8_ENCODING);
                 in=new File(fileName);
-
                 Workbook workbook = Workbook.getWorkbook(in);
                 Log.v("uuuuuuuu","到这里了！！");
                 writebook = Workbook.createWorkbook(new File(fileName), workbook);
