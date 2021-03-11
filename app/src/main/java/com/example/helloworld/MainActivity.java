@@ -23,10 +23,18 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.SDKInitializer;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import jxl.Workbook;
+import jxl.write.Label;
+import jxl.write.WritableCellFormat;
+import jxl.write.WritableFont;
+import jxl.write.WritableSheet;
+import jxl.write.WritableWorkbook;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private static final int RESQUEST=100;
@@ -107,6 +115,41 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //把名字显示到界面
         showNmae();
     }
+
+    //表格测试
+    public void createExcel(String path) {
+        try {
+            // 在path路径下建立一个excel文件
+            WritableWorkbook wbook = Workbook.createWorkbook(new File(path));
+            // 创建一个工作表 第一个工作区
+            WritableSheet wsheet = wbook.createSheet("数据清单", 0);
+            // 设置excel里的字体
+            WritableFont wf = new WritableFont(WritableFont.ARIAL, 12,
+                    WritableFont.NO_BOLD, false);
+            // 给标题规定字体的格式
+            WritableCellFormat titleFormat = new WritableCellFormat(wf);
+            String[] title = { "账号", "密码"};
+            // 设置表头
+            for (int i = 0; i < title.length; i++) {
+                // 一列列的打印表头 按照我们规定的格式
+                Label excelTitle = new Label(i, 0, title[i], titleFormat);
+                // 把标头加到我们的工作区
+                wsheet.addCell(excelTitle);
+            }
+            Label account = new Label(0, 1, "银弹小哥");
+            Label password = new Label(1, 1, "111111");
+            // 把值加到工作表中
+            wsheet.addCell(account);
+            wsheet.addCell(password);
+            // 写入文件
+            wbook.write();
+            wbook.close();
+            System.out.println("创建成功!");
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+    }
+
     //
     //接收复选框传过来的数据
     @Override
