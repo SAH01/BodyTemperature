@@ -1,4 +1,5 @@
 package com.example.helloworld;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -19,7 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
  * 就可以把onClick事件写到onCreate()方法之外
  * 这样，onCreate()方法中的代码就不会显得很冗余
  */
-public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
+public class RegisterActivity extends Activity implements View.OnClickListener {
 
     private String            realCode;
     private DBOpenHelperLogin mDBOpenHelperLogin;

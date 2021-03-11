@@ -1,6 +1,7 @@
 package com.example.helloworld;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
@@ -20,7 +21,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import com.baidu.location.BDAbstractLocationListener;
@@ -34,15 +34,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import jxl.Workbook;
-import jxl.write.Label;
-import jxl.write.WritableCellFormat;
-import jxl.write.WritableFont;
-import jxl.write.WritableSheet;
-import jxl.write.WritableWorkbook;
-
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends Activity implements View.OnClickListener {
     private static final int RESQUEST=100;
     private EditText text1;
     private EditText text2;
@@ -63,8 +55,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView mTv = null;
     public LocationClient mLocationClient = null;
     private MyLocationListener myListener = new MyLocationListener();
-
-
     //获取地址
     public class MyLocationListener extends BDAbstractLocationListener {
         @Override
@@ -114,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //在 Environment.DIRECTORY_DOWNLOADS 目录下创建名为fileName的文件夹 刷新查看
         File file =
                 new File(Environment.getExternalStoragePublicDirectory(Environment.
-                        DIRECTORY_DOWNLOADS), "14days.xls");//参数2是文件名称
+                        DIRECTORY_DOWNLOADS), "success_0.xls");//参数2是文件名称
         //mkdirs()可以创建多级目录
         //mkdir()只能创建一级目录
         if (!file.mkdir()) {
@@ -127,14 +117,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Toast.makeText(MainActivity.this, "创建新文件...", Toast.LENGTH_SHORT).show();
             file.mkdirs();
         }
-        String[] title = {"", "", ""};
+        /*String[] title = {"", "", ""};
         String sheetName = "demoSheetName";
-        ExcelUtil.initExcel(file.getPath(), sheetName, title);
-        //开始写入
-        ArrayList<WenDate> wenDatelistforExcel=mDBHelper.getAllData();
-        ArrayList<User> userlistforExcel=mDBOpenHelperLogin.getAllData();
-        ExcelUtil.writeObjListToExcel(wenDatelistforExcel, file.getPath(),userlistforExcel);
-        System.out.println(file.getPath());
+      ExcelUtil.initExcel(file.getPath(), sheetName, title);*/
         /*
             初始化绑定数据库！！！！！
             很重要
@@ -156,6 +141,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //把名字显示到界面
         showNmae();
         //表格测试
+        //开始写入
+
+        ExcelUtil.writeObjListToExcel(file.getPath());
+        Log.v("over this filemethod:","uuuuuuu");
+        System.out.println("url:"+file.getPath());
     }
     //回调访问权限
     @Override
@@ -339,7 +329,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         list= mDBHelper.getAllData();
         Log.v("输出填表人数：  ", String.valueOf(list.size()));
         if(list.size()!=0)
-        return list.size();
+        return list.size()+1;
         else
         {
             return -1;
@@ -351,7 +341,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ArrayList<User> list= mDBOpenHelperLogin.getAllData();
         Log.v("输出注册人数：  ", String.valueOf(list.size()));
         if(list.size()!=0)
-            return list.size();
+            return list.size()+1;
         else
         {
             return -1;

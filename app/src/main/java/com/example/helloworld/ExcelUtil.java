@@ -27,6 +27,8 @@ public class ExcelUtil {
     private static WritableFont arial12font = null;
     private static WritableCellFormat arial12format = null;
     private final static String UTF8_ENCODING = "UTF-8";
+    private static MyDBHelper mDBHelper;
+    private static DBOpenHelperLogin mDBOpenHelperLogin;
 
     /**
      * 单元格的格式设置 字体大小 颜色 对齐方式、背景颜色等...
@@ -61,11 +63,9 @@ public class ExcelUtil {
     /**
      * 初始化Excel
      *
-     * @param filePath
      * @param fileName 导出excel存放的地址（目录）
-     * @param colName excel中包含的列名（可以有多个）
      */
-    public static void initExcel(String filePath, String fileName, String[] colName) {
+    /*public static void initExcel(String filePath, String fileName, String[] colName) {
         format();
         WritableWorkbook workbook = null;
         try {
@@ -96,60 +96,58 @@ public class ExcelUtil {
             }
         }
     }
-
+*/
     @SuppressWarnings("unchecked")
-    public static <T> void writeObjListToExcel(List<WenDate> objList_wenDate, String fileName, ArrayList<User> objList_user) {
-        if ((objList_wenDate != null && objList_wenDate.size() > 0)&&objList_user != null && objList_user.size()>0){
+    public static <T> void writeObjListToExcel( String fileName) {
             WritableWorkbook writebook = null;
-            InputStream in = null;
+            File in = null;
             try {
+
                 WorkbookSettings setEncode = new WorkbookSettings();
                 setEncode.setEncoding(UTF8_ENCODING);
-                in = new FileInputStream(new File(fileName));
+                in=new File(fileName);
+
                 Workbook workbook = Workbook.getWorkbook(in);
+                Log.v("uuuuuuuu","到这里了！！");
                 writebook = Workbook.createWorkbook(new File(fileName), workbook);
+
                 WritableSheet wsheet = writebook.getSheet(0);
+
                 Label danwei = new Label(1, 1, "石家庄铁道大学");
                 wsheet.addCell(danwei);
                 Label riqi = new Label(5, 1, "2021-03-11");
                 wsheet.addCell(riqi);
-                User tempUser=objList_user.get(0);
-                Label username=new Label(1,2,tempUser.getUsername());
+                Label username=new Label(1,2,"杨传伟");
                 wsheet.addCell(username);
 
-                Label userid=new Label(1,2,tempUser.getUserid());
+                Label userid=new Label(5,2,"20194074");
                 wsheet.addCell(userid);
 
-                Label userphone = new Label(5,3,tempUser.getUserphone());
+                Label userphone = new Label(5,3,"15284206891");
                 wsheet.addCell(userphone);
 
-                Label now = new Label(1,3,"建康");
+                Label now = new Label(1,3,"健康");
                 wsheet.addCell(now);
-
-                int col=1;      //列1到3
-                int row=6;      //行6到19
-
-                for(;col<=3;col++){
-                    for(;row<=19;row++){
-                        if(col==1)
-                        {
+                for(int col=1;  col<=3; col++){
+                    for(int row=6   ;row<=19;row++){
                             Label l1=new Label(col,row,"36.2℃");
                             wsheet.addCell(l1);
-                        }
+                            Log.v("uuuuuuuu","到l1这里了！！");
                         if(col==2)
                         {
                             Label l2=new Label(col,row,"无");
                             wsheet.addCell(l2);
+                            Log.v("uuuuuuuu","到l2这里了！！");
                         }
                         if(col==3)
                         {
                             Label l3=new Label(col,row,"中国河北省邯郸市武安市午汲镇");
                             wsheet.addCell(l3);
+                            Log.v("uuuuuuuu","到l3这里了！！");
                         }
                     }
                 }
                 writebook.write();
-                Log.v("uuuuuuuu       ","导出成功！");
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
@@ -159,16 +157,7 @@ public class ExcelUtil {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-
-                }
-                if (in != null) {
-                    try {
-                        in.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
                 }
             }
         }
     }
-}
