@@ -102,7 +102,6 @@ public class ExcelUtil {
             WritableWorkbook writebook = null;
             File in = null;
             try {
-
                 WorkbookSettings setEncode = new WorkbookSettings();
                 setEncode.setEncoding(UTF8_ENCODING);
                 in=new File(fileName);
